@@ -124,6 +124,8 @@ class LinearOscillatorModel(ModelledRepr):
             for i in range(N):  
 
                 # Get y_left, y_right and y position values
+                # mass = 1.0 / (1.001)**i
+
                 y_l = A1[i-1][0] 
                 y   = A1[ i ][0]
                 y_r = A1[(i+1) % N][0]
@@ -136,9 +138,11 @@ class LinearOscillatorModel(ModelledRepr):
                 delta_v = F * didt
                 
                 # Update the velocity, storing in A2
-                A2[i][1] = (A1[i][1] + delta_v)*damping
+                index = i
+                A2[index][1] = (A1[index][1] + delta_v)*damping
+
                 # Update position
-                A2[i][0] = A1[i][0] + didt * A2[i][1]
+                A2[index][0] = A1[index][0] + didt * A2[index][1]
 
             # Now update the points locations
             dataInTime += didt

@@ -49,7 +49,7 @@ class CircularOscillatorVisualizer(VisualizableMixin):
                     # XXX: This next bit will need to be adjusted!
                     # R ranges from -1.0 to 1.0
                     R = atan(20.0 * point) / (pi/2.0)
-                    print("R =", R)
+                    # print("R =", R)
                     y,x = self._polar_2_cart(R, theta)
                     y,x = int(y), int(x)
 
