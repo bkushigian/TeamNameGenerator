@@ -25,7 +25,7 @@ from math import sin, cos, sqrt, atan, pi
 # Don't know what we'll need...
 from itertools import count, cycle, repeat
 
-class CircularOscillatorMR(LinearOscillatorModel):
+class PulsarMR(LinearOscillatorModel):
     # TODO: include params for ModelledRepr
 
     def __init__(self, 
@@ -42,7 +42,7 @@ class CircularOscillatorMR(LinearOscillatorModel):
                  data_shape       = (256,),
                  damping          = 0.95):
 
-        super(CircularOscillatorMR, self).__init__(
+        super(PulsarMR, self).__init__(
                  pir, 
                  input_fields,
                  sampleRate, 
@@ -58,7 +58,7 @@ class CircularOscillatorMR(LinearOscillatorModel):
 
 
     def __str__(self):
-        return "<CircularOscillatorModel>"
+        return "<PulsarModel>"
 
     def __repr__(self):
         return str(self)
