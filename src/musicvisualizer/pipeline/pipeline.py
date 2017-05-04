@@ -52,6 +52,8 @@ class Pipeline(object):
             visualizer = self.buildLinearOscillatorVisualizer()
         elif self.visualization == 'circular-oscillator':
             visualizer = self.buildCircularOscillatorVisualizer()
+        elif self.visualization == 'pulsar':
+            visualizer = self.buildPulsarVisualizer()
         else:
             if self.verbose:
                 print('Warning: no visualization {}'.format(self.visualization))
@@ -138,4 +140,34 @@ class Pipeline(object):
         if self.verbose:
             print("Creating VIR")
         cvis = CircularOscillatorVisualizer(circosc, mode = 'dots')
+        return cvis
+
+    def buildPulsarVisualizer(self):
+        from musicvisualizer.pipeline.ir import PhaseVocPR, AudioRepr
+        from musicvisualizer.pipeline.models.pulsar import PulsarMR
+        from musicvisualizer.pipeline.models.pulsar_visualizer import PulsarVisualizer
+        
+        if self.verbose:
+            print("Creating AIR")
+        audio = AudioRepr(self.source_wav, self.input_fields)
+
+        if self.verbose:
+            print("Creating PIR")
+        phvoc = PhaseVocPR(audio, self.input_fields)
+        if self.verbose:
+            print("Creating MIR")
+        dataInFPS = phvoc.dataInFPS # XXX: This should be automatic
+        circosc = PulsarMR(
+                  phvoc,                         # Phase Vocoder
+                  input_fields     = self.input_fields,
+                  sampleRate       = 24,         # Visual sample rate
+                  dataInFPS        = dataInFPS,  # Data sample rate (to generate visual)
+                  number_of_points = 256,        # how many points in simulation?
+                  hook             = 821.0,
+                  vertical_hook    = .15,
+                  data_shape       = (256, ),
+                  damping          = 0.92)
+        if self.verbose:
+            print("Creating VIR")
+        cvis = PulsarVisualizer(circosc, mode = 'dots')
         return cvis
