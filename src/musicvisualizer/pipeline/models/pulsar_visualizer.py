@@ -3,7 +3,7 @@ from numpy import zeros
 import numpy as np
 from math import sin, cos, atan, pi
 
-class CircularOscillatorVisualizer(VisualizableMixin):
+class PulsarVisualizer(VisualizableMixin):
     def __init__(self, circular_oscillator, mode = 'dots'):
         self.cosc             = circular_oscillator
         self.mode             = mode
@@ -11,8 +11,6 @@ class CircularOscillatorVisualizer(VisualizableMixin):
 
     def _polar_2_cart(self, R, theta):
         # TODO: Inline this into visualize for better performance
-        if R > 1.0:
-            print ("R = {}, theta = {}".format(R, theta))
         width, height = self.width, self.height
         c_y,c_x = (height / 2, width / 2)
 
@@ -49,7 +47,6 @@ class CircularOscillatorVisualizer(VisualizableMixin):
                     # XXX: This next bit will need to be adjusted!
                     # R ranges from -1.0 to 1.0
                     R = atan(5.0 * point) / (pi/2.0)
-                    print("R =", R)
                     y,x = self._polar_2_cart(R, theta)
                     y,x = int(y), int(x)
 
